@@ -1,6 +1,7 @@
 package ui;
 
 import dao.DatabaseConnection;
+import service.AdminService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,7 @@ public class Login {
     public JPanel rootPanel;
 
 
-    private final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private final AdminService adminService = new AdminService();
 
     public Login() {
         loginButton.addActionListener(new ActionListener() {
@@ -24,7 +25,7 @@ public class Login {
                 String username = usernameField.getText();
                 String password = passwordField.getText();
 
-                if (databaseConnection.login(username, password)) {
+                if (adminService.login(username, password)) {
                     warnLabel.setText("");
                     JFrame jFrame = new JFrame();
                     jFrame.setContentPane(new Home().rootPanel);
@@ -45,6 +46,8 @@ public class Login {
         JFrame jFrame = new JFrame();
         jFrame.setContentPane(new Login().rootPanel);
         jFrame.setVisible(true);
+        jFrame.setSize(600, 600);
+        jFrame.setTitle("Login");
 
 
     }

@@ -13,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Home {
     public JPanel rootPanel;
     private JTextField userNameField;
@@ -26,16 +27,17 @@ public class Home {
     private final EmployeeService employeeService = new EmployeeService();
 
 
+
     public Home() {
 
         for (Employee employee : employeeService.getAll()) {
 
             Object[][] data = {
                     {employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment(), employee.getSalary()}
-            };
+            };  //TODO : bugfix
 
             employeeTable.setModel(new DefaultTableModel(
-                    data ,
+                    data,
                     new String[]{"Id", "Ad", "Soyad", "Departman", "Maas"}
             ));
         }
@@ -74,6 +76,21 @@ public class Home {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
+            }
+        });
+        kullaniciSilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String id = JOptionPane.showInputDialog(rootPanel,"id");
+                int response = JOptionPane.showConfirmDialog(rootPanel,"silmek istediginize emin misiniz ?");
+                if (response==JOptionPane.YES_OPTION){
+                    employeeService.deleteEmployeeById(Integer.parseInt(id));
+                }
+                else {
+                    JOptionPane.showMessageDialog(rootPanel,"silme islemi iptal edildi.");
+                }
+
             }
         });
     }

@@ -5,13 +5,12 @@ import service.EmployeeService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Vector;
 
 
 public class Home {
@@ -28,19 +27,42 @@ public class Home {
 
 
 
-    public Home() {
+    public Home() throws SQLException {
 
         for (Employee employee : employeeService.getAll()) {
-
+/*
             Object[][] data = {
                     {employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment(), employee.getSalary()}
             };  //TODO : bugfix
 
-            employeeTable.setModel(new DefaultTableModel(
-                    data,
-                    new String[]{"Id", "Ad", "Soyad", "Departman", "Maas"}
-            ));
+ */
+            Vector<Employee> data = employeeService.getVectorEmployee();
+
+            Vector<String> column = new Vector<>();
+            column.add("id");
+            column.add("name");
+            column.add("lastname");
+            column.add("department");
+            column.add("salary");
+
+            DefaultTableModel tableModel = new DefaultTableModel();
+            tableModel.setColumnIdentifiers(column);
+
+
+            for (Employee employee1 : employeeService.getAll()) {
+                Object[] row = {employee1.getId(), employee1.getName(), employee1.getLastName(), employee1.getDepartment(), employee1.getSalary()};
+                tableModel.addRow(row);
+            }
+
+
+           // tableModel.addRow(data);
+
+            employeeTable.setModel(tableModel);
         }
+
+
+
+
 
         saveButton.addActionListener(new ActionListener() {
             @Override

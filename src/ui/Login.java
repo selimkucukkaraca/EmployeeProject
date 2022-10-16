@@ -28,7 +28,11 @@ public class Login {
                 if (adminService.login(username, password)) {
                     warnLabel.setText("");
                     JFrame jFrame = new JFrame();
-                    jFrame.setContentPane(new Home().rootPanel);
+                    try {
+                        jFrame.setContentPane(new Home().rootPanel);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
                     jFrame.setVisible(true);
 

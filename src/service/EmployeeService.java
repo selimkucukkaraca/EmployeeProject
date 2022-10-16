@@ -4,7 +4,9 @@ import dao.DatabaseConnection;
 import model.Employee;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 public class EmployeeService {
 
@@ -39,6 +41,41 @@ public class EmployeeService {
             throw new RuntimeException(e);
         }
     }
+
+    public Object[][] getAllEmployeeObject() throws SQLException {
+        //return new Object[][]{databaseConnection.findEmployeeList().toArray()};
+
+        Object[][] data = new Object[1000][];
+        /*
+        for (Employee employee : databaseConnection.findEmployeeList()) {
+            data = new Object[][]{
+                    {employee.getId()}
+            };
+
+        }
+
+         */
+        List<Employee> employeeList = databaseConnection.findEmployeeList();
+
+        for (int i = 0; i < databaseConnection.findEmployeeList().size(); i++) {
+                data = new Object[][]{
+                        {employeeList.get(i).getId(), employeeList.get(i).getName()}
+                };
+
+        }
+        
+        return data;
+
+
+    }
+
+    public Vector<Employee> getVectorEmployee() throws SQLException {
+        Vector<Employee> employeeVector = new Vector<>();
+
+        employeeVector.addAll(databaseConnection.findEmployeeList());
+
+        return employeeVector;
+     }
 
 
 

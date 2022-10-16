@@ -65,8 +65,6 @@ public class DatabaseConnection {
         }
     }
 
-
-
     public void deleteEmployeeById(int id){
         String query = Query.deleteById;
 

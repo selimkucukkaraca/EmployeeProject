@@ -15,10 +15,8 @@ public class DatabaseConnection {
     private PreparedStatement preparedStatement = null;
 
 
-
-
-    public DatabaseConnection(){
-        String url = "jdbc:mysql://" + DatabaseInformation.host + ":" + DatabaseInformation.port + "/" + DatabaseInformation.db_name+ "?useUnicode=true&characterEncoding=utf8";
+    public DatabaseConnection() {
+        String url = "jdbc:mysql://" + DatabaseInformation.host + ":" + DatabaseInformation.port + "/" + DatabaseInformation.db_name + "?useUnicode=true&characterEncoding=utf8";
 
 
         try {
@@ -38,49 +36,42 @@ public class DatabaseConnection {
     }
 
 
-
-
     public List<Employee> findEmployeeList() throws SQLException {
         statement = con.createStatement();
         final List<Employee> employeeList = new ArrayList<>();
-
-        String query =  Query.findAllQuery + "calisanlar";
+        String query = Query.findAllQuery + "calisanlar";
 
         try {
             ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("ad");
                 String lastName = resultSet.getString("soyad");
                 String department = resultSet.getString("departman");
                 int salary = resultSet.getInt("maas");
-
                 employeeList.add(new Employee(id, name, lastName, department, salary));
             }
             return employeeList;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void deleteEmployeeById(int id){
+
+    public void deleteEmployeeById(int id) {
         String query = Query.deleteById;
 
         try {
             preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 
-
-    public Employee save(String name,String lastname,String department,int salary){
+    public Employee save(String name, String lastname, String department, int salary) {
         String query = Query.save;
 
         try {
@@ -88,12 +79,12 @@ public class DatabaseConnection {
             Employee employee = new Employee(name, lastname, department, salary);
 
 
-                preparedStatement.setString(1, employee.getName());
-                preparedStatement.setString(2, employee.getLastName());
-                preparedStatement.setString(3, employee.getDepartment());
-                preparedStatement.setString(4, String.valueOf(employee.getSalary()));
+            preparedStatement.setString(1, employee.getName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setString(3, employee.getDepartment());
+            preparedStatement.setString(4, String.valueOf(employee.getSalary()));
 
-                preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
             return null;
 
@@ -103,14 +94,13 @@ public class DatabaseConnection {
     }
 
 
-
-    public boolean login(String username,String password){
+    public boolean login(String username, String password) {
         String query = Query.login;
 
         try {
             preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,username);
-            preparedStatement.setString(2,password);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
@@ -119,11 +109,6 @@ public class DatabaseConnection {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
-
 
 
 }

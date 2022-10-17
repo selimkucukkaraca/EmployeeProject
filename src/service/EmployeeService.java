@@ -12,26 +12,22 @@ public class EmployeeService {
 
     private final DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public Employee save(Employee employee){
-        if (checkNewEmployeeFields(employee)){
+    public Employee save(Employee employee) {
+        if (checkNewEmployeeFields(employee)) {
             return databaseConnection.save(employee.getName(), employee.getLastName(), employee.getDepartment(), employee.getSalary());
         }
         return null;
     }
+
     private boolean checkNewEmployeeFields(Employee employee) {
         return !employee.getName().isBlank() && !employee.getLastName().isBlank();
     }
-
-
 
 
     public void deleteEmployeeById(int id) {
         databaseConnection.deleteEmployeeById(id);
 
     }
-
-
-
 
 
     public List<Employee> getAll() {
@@ -43,30 +39,17 @@ public class EmployeeService {
     }
 
     public Object[][] getAllEmployeeObject() throws SQLException {
-        //return new Object[][]{databaseConnection.findEmployeeList().toArray()};
 
         Object[][] data = new Object[1000][];
-        /*
-        for (Employee employee : databaseConnection.findEmployeeList()) {
-            data = new Object[][]{
-                    {employee.getId()}
-            };
 
-        }
-
-         */
         List<Employee> employeeList = databaseConnection.findEmployeeList();
 
         for (int i = 0; i < databaseConnection.findEmployeeList().size(); i++) {
-                data = new Object[][]{
-                        {employeeList.get(i).getId(), employeeList.get(i).getName()}
-                };
-
+            data = new Object[][]{
+                    {employeeList.get(i).getId(), employeeList.get(i).getName()}
+            };
         }
-        
         return data;
-
-
     }
 
     public Vector<Employee> getVectorEmployee() throws SQLException {
@@ -75,14 +58,7 @@ public class EmployeeService {
         employeeVector.addAll(databaseConnection.findEmployeeList());
 
         return employeeVector;
-     }
-
-
-
-
-
-
-
+    }
 
 
 }

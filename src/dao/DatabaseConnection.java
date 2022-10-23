@@ -16,7 +16,8 @@ public class DatabaseConnection {
 
 
     public DatabaseConnection() {
-        String url = "jdbc:mysql://" + DatabaseInformation.host + ":" + DatabaseInformation.port + "/" + DatabaseInformation.db_name + "?useUnicode=true&characterEncoding=utf8";
+        String url = "jdbc:mysql://" + DatabaseInformation.host + ":" +
+                DatabaseInformation.port + "/" + DatabaseInformation.db_name + "?useUnicode=true&characterEncoding=utf8";
 
 
         try {

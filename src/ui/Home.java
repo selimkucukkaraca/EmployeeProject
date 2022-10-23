@@ -20,7 +20,6 @@ public class Home {
     private JTextField salaryField;
     private JButton kullaniciSilButton;
     private JTable employeeTable;
-    private JButton tabloyuGuncelleButton;
     private JTextField aramaCubugu;
 
 
@@ -38,10 +37,6 @@ public class Home {
 
     public Home() throws SQLException {
 
-        for (Employee employee : employeeService.getAll()) {
-
-            Vector<Employee> data = employeeService.getVectorEmployee();
-
             Vector<String> column = new Vector<>();
             column.add("id");
             column.add("name");
@@ -58,7 +53,7 @@ public class Home {
                 tableModel.addRow(row);
             }
             employeeTable.setModel(tableModel);
-        }
+
 
 
         saveButton.addActionListener(new ActionListener() {
